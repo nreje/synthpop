@@ -579,7 +579,7 @@ syn.ctree <- function(y, x, xp, smoothing, proper = FALSE, minbucket = 5,
                       mincriterion = 0.9, ... )
 { 
   if (proper == TRUE) {
-    s <- sample(length(y), replace = truehist())
+    s <- sample(length(y), replace = TRUE)
     y <- y[s]
     x <- x[s, , drop = FALSE]
   }
