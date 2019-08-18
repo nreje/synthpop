@@ -8,6 +8,7 @@
 .norm.fix.syn <- function(y, x, ridge=0.00001, ...)
 {
 # Calculates regression coefficients + error estimate
+  assign("debug3", x, envir = .GlobalEnv)
   xtx <- t(x) %*% x
   pen <- ridge * diag(xtx)
   if (length(pen)==1) pen <- matrix(pen)
@@ -144,9 +145,9 @@ syn.normrank <- function(y, x, xp, smoothing, proper = FALSE, ...)
 
   z    <- qnorm(rank(y)/(length(y) + 1))
   
-  print(x)
+  assign("debug1", x, envir = .GlobalEnv)
   x    <- cbind(1, as.matrix(x))
-  print(x)
+  assign("debug2", x, envir = .GlobalEnv)
   xp   <- cbind(1, as.matrix(xp))
 
   if (proper == FALSE) {
