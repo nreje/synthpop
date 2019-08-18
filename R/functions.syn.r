@@ -8,7 +8,6 @@
 .norm.fix.syn <- function(y, x, ridge=0.00001, ...)
 {
 # Calculates regression coefficients + error estimate
-  print(x)
   xtx <- t(x) %*% x
   pen <- ridge * diag(xtx)
   if (length(pen)==1) pen <- matrix(pen)
@@ -144,8 +143,10 @@ syn.normrank <- function(y, x, xp, smoothing, proper = FALSE, ...)
   # matters for sub-samples and missing data
 
   z    <- qnorm(rank(y)/(length(y) + 1))
-
+  
+  print(x)
   x    <- cbind(1, as.matrix(x))
+  print(x)
   xp   <- cbind(1, as.matrix(xp))
 
   if (proper == FALSE) {
@@ -247,7 +248,9 @@ syn.pmm <- function(y, x, xp, proper = FALSE, ...)
 # Synthesis of y by predictive mean matching
 # Warning: can be slow for large data sets 
 # for which syn.normrank may be a better choice
+  print(x)
   x       <- cbind(1, as.matrix(x))
+  print(x)
   xp      <- cbind(1, as.matrix(xp))
   if (proper == FALSE) {
     parm <- .norm.fix.syn(y, x, ...)
