@@ -8,7 +8,7 @@
 .norm.fix.syn <- function(y, x, ridge=0.00001, ...)
 {
 # Calculates regression coefficients + error estimate
-
+  print(x)
   xtx <- t(x) %*% x
   pen <- ridge * diag(xtx)
   if (length(pen)==1) pen <- matrix(pen)
