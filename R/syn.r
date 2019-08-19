@@ -969,7 +969,6 @@ check.rules.syn <- function(setup, data) {
  #
  method[!(1:length(method) %in% visit.sequence)] <- ""  #GR?BN?
  
- assign("debug10", predictor.matrix, envir = .GlobalEnv)
 
  # Identify any factors with > maxfaclevels levels that are in visit.sequence
  no.fac.levels <- sapply(data, function(x) length(levels(x)))
@@ -1053,7 +1052,6 @@ check.rules.syn <- function(setup, data) {
    notevent <- is.na(match(1:nvar,event))          # if not in event list
  }
  
- assign("debug11", predictor.matrix, envir = .GlobalEnv)
 
  # Print out info on variables not synthesised but used in prediction
  pred.not.syn <- (ispredictor & notsynth)
@@ -1070,6 +1068,8 @@ check.rules.syn <- function(setup, data) {
  } 
  #browser()                                                     #  GR condition added
  if (sum(predictor.matrix) > 0) {
+   
+   assign("debug10", predictor.matrix, envir = .GlobalEnv)
 	 
    pm <- padMis.syn(data, method, predictor.matrix, visit.sequence,
 			   nvar, rules, rvalues, default.method, cont.na, smoothing, event, denom)
@@ -1088,6 +1088,8 @@ check.rules.syn <- function(setup, data) {
      stop("Column names of padded data should be unique.")
  
 	 p$cont.na <- pm$cont.na  #!bn
+	 
+	 assign("debug11", p$predictor.matrix, envir = .GlobalEnv)
 	 
  } else {
  
