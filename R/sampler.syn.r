@@ -153,6 +153,7 @@ sampler.syn <- function(p, data, m, syn, visit.sequence,
              
              assign("debug6", p$data, envir = .GlobalEnv)
              assign("debug7", p$predictor.matrix, envir = .GlobalEnv)
+             assign("debug9", p$method, envir = .GlobalEnv)
           
              x    <- p$data[ya, p$predictor.matrix[j, ] == 1, drop = FALSE]
              xp   <- p$syn[ypa, p$predictor.matrix[j, ] == 1, drop = FALSE]
