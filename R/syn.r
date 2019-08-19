@@ -105,7 +105,6 @@ if (!is.null(numtocat)) {
         paste(numtocat[nummth], collapse = ", "),
         ")\nunsuitable for categorical data.", sep = "", call. = FALSE)
  }
- assign("debug10", predictor.matrix, envir = .GlobalEnv)
 
  # modify visit sequence and predictor matrix to synthesis numtocat 
  # original variables after the others
@@ -117,7 +116,6 @@ if (!is.null(numtocat)) {
      predictor.matrix[dim(data)[2] + i, numtocat.obj$ind[i]] <- 1
    }
  }
- assign("debug11", predictor.matrix, envir = .GlobalEnv)
 
  # move these parameters to numeric versions
  newnames <- function(x) { 
@@ -240,6 +238,8 @@ check.predictor.matrix.syn <- function(setup){
  # to lower diagonal in order of visitSequnce but with
  # elements for variables not to be synthesised set to 0
  
+ assign("debug10", pred, envir = .GlobalEnv)
+ 
  pred.dt           <- matrix(0, nvar, nvar)
  pred.dt[vis, vis] <- outer(1:length(vis), 1:length(vis), ">")
  if (is.null(pred)) pred <- pred.dt
@@ -289,6 +289,7 @@ check.predictor.matrix.syn <- function(setup){
  }
  setup$predictor.matrix <- pred
  setup$visit.sequence   <- vis
+ assign("debug11", pred, envir = .GlobalEnv)
  return(setup)
 }
 ##-----------------end of--check.predictor.matrix.syn-------------------
