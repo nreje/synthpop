@@ -260,6 +260,7 @@ syn.pmm <- function(y, x, xp, proper = FALSE, ...)
   } else {
     parm <- .norm.draw.syn(y, x, ...)
   }
+  assign("debug10", parm, envir = .GlobalEnv)
   yhatobs <- x  %*% parm$coef
   yhatmis <- xp %*% parm$beta
   res <- apply(as.array(yhatmis), 1, .pmm.match, yhat = yhatobs, y = y, ...)
