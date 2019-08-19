@@ -1069,12 +1069,10 @@ check.rules.syn <- function(setup, data) {
  #browser()                                                     #  GR condition added
  if (sum(predictor.matrix) > 0) {
    
-   assign("debug10", predictor.matrix, envir = .GlobalEnv)
 	 
    pm <- padMis.syn(data, method, predictor.matrix, visit.sequence,
 			   nvar, rules, rvalues, default.method, cont.na, smoothing, event, denom)
    
-   assign("debug12", pm$predictor.matrix, envir = .GlobalEnv)
 
 	 # Pad the Syhthesis model with dummy variables for the factors
 	 # p <- padModel.syn(data, method, predictor.matrix, visit.sequence,
@@ -1091,7 +1089,6 @@ check.rules.syn <- function(setup, data) {
  
 	 p$cont.na <- pm$cont.na  #!bn
 	 
-	 assign("debug11", p$predictor.matrix, envir = .GlobalEnv)
 	 
  } else {
  
