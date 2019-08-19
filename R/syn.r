@@ -105,7 +105,7 @@ if (!is.null(numtocat)) {
         paste(numtocat[nummth], collapse = ", "),
         ")\nunsuitable for categorical data.", sep = "", call. = FALSE)
  }
- assign("debug9", predictor.matrix, envir = .GlobalEnv)
+ assign("debug10", predictor.matrix, envir = .GlobalEnv)
 
  # modify visit sequence and predictor matrix to synthesis numtocat 
  # original variables after the others
@@ -117,7 +117,7 @@ if (!is.null(numtocat)) {
      predictor.matrix[dim(data)[2] + i, numtocat.obj$ind[i]] <- 1
    }
  }
- assign("debug10", predictor.matrix, envir = .GlobalEnv)
+ assign("debug11", predictor.matrix, envir = .GlobalEnv)
 
  # move these parameters to numeric versions
  newnames <- function(x) { 
