@@ -22,7 +22,7 @@ padModel.syn <- function(data, method, predictor.matrix, visit.sequence,
 
  # pred.with.cart <- method %in% c("ctree", "ctree.proper", "cart", "cart.proper", "collinear", "satcat") #!BN to check if collinear needed
                                                                                
-  pred.with.cart <- !method %in% c("norm", "normrank", "logreg", "lognorm", 
+  pred.with.cart <- !method %in% c("norm", "normrank", "logreg", "lognorm", "pmm",
                                    "polr", "polyreg", "cubertnorm", "sqrtnorm")  #!GR050318
   for (j in 1:nvar) {
     message(paste0("var ",j,"(",method[j],")",": "),appendLF = FALSE)
@@ -68,7 +68,6 @@ padModel.syn <- function(data, method, predictor.matrix, visit.sequence,
             visit.sequence <- append(visit.sequence, newcol, idx)
           }
       }
-      message(paste0("."),appendLF = TRUE)
 
  # augment the data with columns for the new dummies
       data <- (cbind(data, matrix(0, ncol = n.dummy, nrow = nrow(data))))
@@ -90,6 +89,7 @@ padModel.syn <- function(data, method, predictor.matrix, visit.sequence,
                           yes.no.dummy      = rep(TRUE, n.dummy), 
                           corresponding.column.dummy = rep(j,n.dummy)))
     }
+    message(paste0("."),appendLF = TRUE)
   }                                                       
    
   varnames <- dimnames(data)[[2]]  # now includes dummy names
