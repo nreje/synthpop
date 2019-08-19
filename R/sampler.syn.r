@@ -187,7 +187,7 @@ sampler.syn <- function(p, data, m, syn, visit.sequence,
                if (models) fits[[i]][[j]] <- synfun$fit
                
              } else {
-               print("HERE")
+               assign("debug6", x, envir = .GlobalEnv)
                synfun <- do.call(f, args = c(list(y = y, x = x, xp = xp,
                  smoothing = p$smoothing[j], proper = proper), fun.args))
                p$syn[ypa, j] <- synfun$res
