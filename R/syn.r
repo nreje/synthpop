@@ -238,7 +238,6 @@ check.predictor.matrix.syn <- function(setup){
  # to lower diagonal in order of visitSequnce but with
  # elements for variables not to be synthesised set to 0
  
- assign("debug10", pred, envir = .GlobalEnv)
  
  pred.dt           <- matrix(0, nvar, nvar)
  pred.dt[vis, vis] <- outer(1:length(vis), 1:length(vis), ">")
@@ -289,7 +288,6 @@ check.predictor.matrix.syn <- function(setup){
  }
  setup$predictor.matrix <- pred
  setup$visit.sequence   <- vis
- assign("debug11", pred, envir = .GlobalEnv)
  return(setup)
 }
 ##-----------------end of--check.predictor.matrix.syn-------------------
@@ -309,6 +307,7 @@ check.method.syn <- function(setup, data, proper) {
  event          <- setup$event
  denom          <- setup$denom                    
 
+ assign("debug10", pred, envir = .GlobalEnv)
  # check that all ipf and allcat are at start of visit sequence   
  mcatall <- (method %in% "catall")[vis]
  mipf    <- (method %in% "ipf")[vis]
@@ -596,6 +595,8 @@ check.method.syn <- function(setup, data, proper) {
  setup$predictor.matrix <- pred
  setup$visit.sequence   <- vis
  setup$denom            <- denom                  #GRdenom new
+ 
+ assign("debug11", pred, envir = .GlobalEnv)
  
  return(setup)
 }
