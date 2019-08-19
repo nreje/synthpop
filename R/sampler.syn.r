@@ -97,6 +97,7 @@ sampler.syn <- function(p, data, m, syn, visit.sequence,
      #--------------------------------------------------------------------------
      if (length(rest.visit.sequence) > 0) {           
        prcount <- 0 # to get new lines come out right
+       assign("debug8", rest.visit.sequence, envir = .GlobalEnv)
        for (j in rest.visit.sequence) {
 
          theMethod <- p$method[j]
