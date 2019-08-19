@@ -25,11 +25,12 @@ padModel.syn <- function(data, method, predictor.matrix, visit.sequence,
   pred.with.cart <- !method %in% c("norm", "normrank", "logreg", "lognorm", 
                                    "polr", "polyreg", "cubertnorm", "sqrtnorm")  #!GR050318
   for (j in 1:nvar) {
+    message(paste0("var ",j,"(",method[j],")",": "),appendLF = FALSE)
     if ((is.factor(data[,j]) & any(predictor.matrix[1:nvar,j] != 0 & !pred.with.cart)) |  #!BN-16/05/2016
         (factorNA[j] == TRUE & !pred.with.cart[j])) {                                      #!BN-16/05/2016
       categories[j, 1] <- TRUE
       
-      print("NO CART HERE")
+      message(paste0("NO CART HERE"),appendLF = FALSE)
 
       # all factors defined to have treatment contrasts
       #!data[, j] <- C(data[, j], contr.treatment)                              UNCOMMENT???? BN-28/04/2016
@@ -67,6 +68,7 @@ padModel.syn <- function(data, method, predictor.matrix, visit.sequence,
             visit.sequence <- append(visit.sequence, newcol, idx)
           }
       }
+      message(paste0("."),appendLF = TRUE)
 
  # augment the data with columns for the new dummies
       data <- (cbind(data, matrix(0, ncol = n.dummy, nrow = nrow(data))))
