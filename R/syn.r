@@ -307,7 +307,6 @@ check.method.syn <- function(setup, data, proper) {
  event          <- setup$event
  denom          <- setup$denom                    
 
- assign("debug10", pred, envir = .GlobalEnv)
  # check that all ipf and allcat are at start of visit sequence   
  mcatall <- (method %in% "catall")[vis]
  mipf    <- (method %in% "ipf")[vis]
@@ -596,7 +595,6 @@ check.method.syn <- function(setup, data, proper) {
  setup$visit.sequence   <- vis
  setup$denom            <- denom                  #GRdenom new
  
- assign("debug11", pred, envir = .GlobalEnv)
  
  return(setup)
 }
@@ -970,6 +968,8 @@ check.rules.syn <- function(setup, data) {
  ############################################################!GRipf added this as seemed right
  #
  method[!(1:length(method) %in% visit.sequence)] <- ""  #GR?BN?
+ 
+ assign("debug10", predictor.matrix, envir = .GlobalEnv)
 
  # Identify any factors with > maxfaclevels levels that are in visit.sequence
  no.fac.levels <- sapply(data, function(x) length(levels(x)))
@@ -1052,6 +1052,8 @@ check.rules.syn <- function(setup, data) {
    notsynth <- notinvs | (!notinvs & method == "") # if not synthesised
    notevent <- is.na(match(1:nvar,event))          # if not in event list
  }
+ 
+ assign("debug11", predictor.matrix, envir = .GlobalEnv)
 
  # Print out info on variables not synthesised but used in prediction
  pred.not.syn <- (ispredictor & notsynth)
