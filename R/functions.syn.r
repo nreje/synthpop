@@ -8,7 +8,7 @@
 .norm.fix.syn <- function(y, x, ridge=0.00001, ...)
 {
 # Calculates regression coefficients + error estimate
-  assign("debug3", x, envir = .GlobalEnv)
+
   xtx <- t(x) %*% x
   pen <- ridge * diag(xtx)
   if (length(pen)==1) pen <- matrix(pen)
@@ -249,18 +249,16 @@ syn.pmm <- function(y, x, xp, proper = FALSE, ...)
 # Synthesis of y by predictive mean matching
 # Warning: can be slow for large data sets 
 # for which syn.normrank may be a better choice
-  assign("debug1", x, envir = .GlobalEnv)
+
   x       <- cbind(1, as.matrix(x))
-  assign("debug2", x, envir = .GlobalEnv)
-  assign("debug4", xp, envir = .GlobalEnv)
   xp      <- cbind(1, as.matrix(xp))
-  assign("debug5", xp, envir = .GlobalEnv)
+
   if (proper == FALSE) {
     parm <- .norm.fix.syn(y, x, ...)
   } else {
     parm <- .norm.draw.syn(y, x, ...)
   }
-  assign("debug10", parm, envir = .GlobalEnv)
+
   yhatobs <- x  %*% parm$beta
   yhatmis <- xp %*% parm$beta
   res <- apply(as.array(yhatmis), 1, .pmm.match, yhat = yhatobs, y = y, ...)

@@ -97,7 +97,6 @@ sampler.syn <- function(p, data, m, syn, visit.sequence,
      #--------------------------------------------------------------------------
      if (length(rest.visit.sequence) > 0) {           
        prcount <- 0 # to get new lines come out right
-       assign("debug8", rest.visit.sequence, envir = .GlobalEnv)
        for (j in rest.visit.sequence) {
 
          theMethod <- p$method[j]
@@ -151,9 +150,6 @@ sampler.syn <- function(p, data, m, syn, visit.sequence,
             
            } else {
              
-             assign("debug6", p$data, envir = .GlobalEnv)
-             assign("debug7", p$predictor.matrix, envir = .GlobalEnv)
-             assign("debug9", p$method, envir = .GlobalEnv)
           
              x    <- p$data[ya, p$predictor.matrix[j, ] == 1, drop = FALSE]
              xp   <- p$syn[ypa, p$predictor.matrix[j, ] == 1, drop = FALSE]
