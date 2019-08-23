@@ -259,7 +259,7 @@ syn.pmm <- function(y, x, xp, proper = FALSE, ...)
     parm <- .norm.draw.syn(y, x, ...)
   }
 
-  yhatobs <- x  %*% parm$beta
+  yhatobs <- x  %*% parm$coef
   yhatmis <- xp %*% parm$beta
   res <- apply(as.array(yhatmis), 1, .pmm.match, yhat = yhatobs, y = y, ...)
   
