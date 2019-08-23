@@ -322,15 +322,23 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
       kk <- 0
       simvals <- rep(NA, m*(m - 1)/2)
     }
+    time <- list()
     for (j in 1:m) {
+      timeU <- list()
+      timeU <- c(timeU,list(Sys.time()))
       res.ind <- propcalcs(object$syn[[j]], data)
       if (method == "logit" & is.null(resamp.method)) {
         if (j == 1) cat("Fitting syntheses: ")
         cat(j, " ", sep = "")
       }
-      utilVal[j] <- res.ind$utilVal; fit[[j]] <- res.ind$fit; nnosplits[[j]] <- res.ind$nnosplits
+      timeU <- c(timeU,list(Sys.time()))
+      utilVal[j] <- res.ind$utilVal
+      timeU <- c(timeU,list(Sys.time()))
+      fit[[j]] <- res.ind$fit
+      timeU <- c(timeU,list(Sys.time()))
+      nnosplits[[j]] <- res.ind$nnosplits
+      timeU <- c(timeU,list(Sys.time()))
       if (!is.null(resamp.method) && resamp.method == "pairs") {
-        print("NOT HERE")
         if (j == 1) {
           if (print.every == 0) cat("Simulating NULL pMSE from ", m*(m - 1)/2, " pairs.", sep = "")
           else cat("Simulating NULL pMSE from ", m*(m - 1)/2, " pairs, printing every ", print.every, "th:\n", sep = "")
@@ -343,12 +351,17 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
             simvals[kk] <- propcalcs(object$syn[[j]], object$syn[[jj]])$utilVal
           }
         }
-      } else { 
-        print("BUT HERE")
-        utilExp[j] <- res.ind$utilExp
+      } else {
+        timeU <- c(timeU,list(Sys.time()))
+        utilExp[j] <- res.ind$utilExp 
+        timeU <- c(timeU,list(Sys.time()))
         utilR[j]   <- res.ind$utilR 
+        timeU <- c(timeU,list(Sys.time()))
         utilStd[j] <- res.ind$utilStd
+        timeU <- c(timeU,list(Sys.time()))
       }
+      time <- c(time,list(timeU))
+      assign("debugTime", time, envir = .GlobalEnv)
     }
     
     if (!is.null(resamp.method) && resamp.method == "pairs") {
