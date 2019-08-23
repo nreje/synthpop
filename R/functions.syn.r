@@ -255,12 +255,14 @@ syn.pmm <- function(y, x, xp, proper = FALSE, ...)
 
   if (proper == FALSE) {
     parm <- .norm.fix.syn(y, x, ...)
+    yhatobs <- x  %*% parm$beta
+    yhatmis <- xp %*% parm$beta
   } else {
     parm <- .norm.draw.syn(y, x, ...)
+    yhatobs <- x  %*% parm$coef
+    yhatmis <- xp %*% parm$beta
   }
-
-  yhatobs <- x  %*% parm$coef
-  yhatmis <- xp %*% parm$beta
+  
   res <- apply(as.array(yhatmis), 1, .pmm.match, yhat = yhatobs, y = y, ...)
   
   return(list(res = res, fit = parm))
