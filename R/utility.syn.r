@@ -330,6 +330,7 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
       }
       utilVal[j] <- res.ind$utilVal; fit[[j]] <- res.ind$fit; nnosplits[[j]] <- res.ind$nnosplits
       if (!is.null(resamp.method) && resamp.method == "pairs") {
+        print("NOT HERE")
         if (j == 1) {
           if (print.every == 0) cat("Simulating NULL pMSE from ", m*(m - 1)/2, " pairs.", sep = "")
           else cat("Simulating NULL pMSE from ", m*(m - 1)/2, " pairs, printing every ", print.every, "th:\n", sep = "")
@@ -343,6 +344,7 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
           }
         }
       } else { 
+        print("BUT HERE")
         utilExp[j] <- res.ind$utilExp
         utilR[j]   <- res.ind$utilR 
         utilStd[j] <- res.ind$utilStd
