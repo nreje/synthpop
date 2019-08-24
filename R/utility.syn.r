@@ -186,23 +186,16 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
    }
     
    if (method == "logit") {
-     print("LOGIT")
      if (maxorder > 4) cat("Maximum order of interactions over 4 may cause computational problems.\n")
      if (maxorder >= 1) logit.int <- as.formula(paste("t ~ .^", maxorder + 1))
      else logit.int <- as.formula(paste("t ~ ."))
      
-     if (aggregate == TRUE){
-       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
-       fit <- glm(logit.int, data = aggdat, family = "binomial", 
+     if (aggregate == TRUE) fit <- glm(logit.int, data = aggdat, family = "binomial", 
                                        control = list(maxit = maxit), weights = wt)
-       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
-     }
-     else{
-       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
-       fit <- glm(logit.int, data = df.prop, family = "binomial",
+     
+     else fit <- glm(logit.int, data = df.prop, family = "binomial",
                      control = list(maxit = maxit))
-       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
-     }
+     
      if (fit$converged == FALSE) cat("Warning: Logistic model did not converge in ",
                                     maxit, " iterations.\nYou should increase parameter 'maxit'.\n", sep = "")
 
@@ -232,7 +225,6 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
      # res.ind <- list(utilVal = utilVal, utilExp = km1, utilR = utilR, utilStd = utilStd, fit = fit)
     
    } else if (method == "cart") {
-     print("CART")
       
      if (tree.method == "rpart") {
        fit <- rpart(t ~ ., data = df.prop, method = 'class', 
@@ -248,7 +240,6 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
    
    # Permutation test 
    if (!is.null(resamp.method) && resamp.method == "perm") { # to allow resamp for logit models
-     print("PERMUTATION")
      simutil <- rep(0, nperms)
      if (m == 1) j <- 1
      if (j == 1 ) {
@@ -335,24 +326,14 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
       kk <- 0
       simvals <- rep(NA, m*(m - 1)/2)
     }
-    time <- list()
     for (j in 1:m) {
-      assign("timeU", list(), envir = .GlobalEnv)
-      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       res.ind <- propcalcs(object$syn[[j]], data)
-      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       if (method == "logit" & is.null(resamp.method)) {
         if (j == 1) cat("Fitting syntheses: ")
         cat(j, " ", sep = "")
       }
-      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       
-      utilVal[j] <- res.ind$utilVal
-      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
-      fit[[j]] <- res.ind$fit
-      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
-      nnosplits[[j]] <- res.ind$nnosplits
-      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
+      utilVal[j] <- res.ind$utilVal; fit[[j]] <- res.ind$fit; nnosplits[[j]] <- res.ind$nnosplits
       if (!is.null(resamp.method) && resamp.method == "pairs") {
         if (j == 1) {
           if (print.every == 0) cat("Simulating NULL pMSE from ", m*(m - 1)/2, " pairs.", sep = "")
@@ -367,15 +348,10 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
           }
         }
       } else {
-        assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
         utilExp[j] <- res.ind$utilExp 
         utilR[j]   <- res.ind$utilR 
         utilStd[j] <- res.ind$utilStd
-        assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       }
-      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
-      time <- c(time,list(timeU))
-      assign("debugTime", time, envir = .GlobalEnv)
     }
     
     if (!is.null(resamp.method) && resamp.method == "pairs") {
