@@ -184,6 +184,7 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
    }
     
    if (method == "logit") {
+     print("LOGIT")
      if (maxorder > 4) cat("Maximum order of interactions over 4 may cause computational problems.\n")
      if (maxorder >= 1) logit.int <- as.formula(paste("t ~ .^", maxorder + 1))
      else logit.int <- as.formula(paste("t ~ ."))
@@ -221,6 +222,7 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
      # res.ind <- list(utilVal = utilVal, utilExp = km1, utilR = utilR, utilStd = utilStd, fit = fit)
     
    } else if (method == "cart") {
+     print("CART")
       
      if (tree.method == "rpart") {
        fit <- rpart(t ~ ., data = df.prop, method = 'class', 
@@ -236,6 +238,7 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
    
    # Permutation test 
    if (!is.null(resamp.method) && resamp.method == "perm") { # to allow resamp for logit models
+     print("PERMUTATION")
      simutil <- rep(0, nperms)
      if (m == 1) j <- 1
      if (j == 1 ) {
