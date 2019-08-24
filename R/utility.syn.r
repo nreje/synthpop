@@ -339,14 +339,14 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       res.ind <- propcalcs(object$syn[[j]], data)
       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
-      time <- c(time,list(timeU))
-      assign("debugTime", time, envir = .GlobalEnv)
       if (method == "logit" & is.null(resamp.method)) {
         if (j == 1) cat("Fitting syntheses: ")
         cat(j, " ", sep = "")
       }
+      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       
       utilVal[j] <- res.ind$utilVal; fit[[j]] <- res.ind$fit; nnosplits[[j]] <- res.ind$nnosplits
+      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       if (!is.null(resamp.method) && resamp.method == "pairs") {
         if (j == 1) {
           if (print.every == 0) cat("Simulating NULL pMSE from ", m*(m - 1)/2, " pairs.", sep = "")
@@ -361,10 +361,15 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
           }
         }
       } else {
+        assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
         utilExp[j] <- res.ind$utilExp 
         utilR[j]   <- res.ind$utilR 
         utilStd[j] <- res.ind$utilStd
+        assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       }
+      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
+      time <- c(time,list(timeU))
+      assign("debugTime", time, envir = .GlobalEnv)
     }
     
     if (!is.null(resamp.method) && resamp.method == "pairs") {
