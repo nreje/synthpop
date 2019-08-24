@@ -190,16 +190,16 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
      else logit.int <- as.formula(paste("t ~ ."))
      
      if (aggregate == TRUE){
-       timeU <- c(timeU,list(Sys.time()))
+       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
        fit <- glm(logit.int, data = aggdat, family = "binomial", 
                                        control = list(maxit = maxit), weights = wt)
-       timeU <- c(timeU,list(Sys.time()))
+       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
      }
      else{
-       timeU <- c(timeU,list(Sys.time()))
+       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
        fit <- glm(logit.int, data = df.prop, family = "binomial",
                      control = list(maxit = maxit))
-       timeU <- c(timeU,list(Sys.time()))
+       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
      }
      if (fit$converged == FALSE) cat("Warning: Logistic model did not converge in ",
                                     maxit, " iterations.\nYou should increase parameter 'maxit'.\n", sep = "")
@@ -335,10 +335,10 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
     }
     time <- list()
     for (j in 1:m) {
-      timeU <- list()
-      timeU <- c(timeU,list(Sys.time()))
+      assign("timeU", list(), envir = .GlobalEnv)
+      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       res.ind <- propcalcs(object$syn[[j]], data)
-      timeU <- c(timeU,list(Sys.time()))
+      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       time <- c(time,list(timeU))
       assign("debugTime", time, envir = .GlobalEnv)
       if (method == "logit" & is.null(resamp.method)) {
