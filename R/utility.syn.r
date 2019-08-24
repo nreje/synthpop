@@ -189,10 +189,18 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
      if (maxorder >= 1) logit.int <- as.formula(paste("t ~ .^", maxorder + 1))
      else logit.int <- as.formula(paste("t ~ ."))
      
-     if (aggregate == TRUE) fit <- glm(logit.int, data = aggdat, family = "binomial", 
+     if (aggregate == TRUE){
+       timeU <- c(timeU,list(Sys.time()))
+       fit <- glm(logit.int, data = aggdat, family = "binomial", 
                                        control = list(maxit = maxit), weights = wt)
-     else fit <- glm(logit.int, data = df.prop, family = "binomial",
+       timeU <- c(timeU,list(Sys.time()))
+     }
+     else{
+       timeU <- c(timeU,list(Sys.time()))
+       fit <- glm(logit.int, data = df.prop, family = "binomial",
                      control = list(maxit = maxit))
+       timeU <- c(timeU,list(Sys.time()))
+     }
      if (fit$converged == FALSE) cat("Warning: Logistic model did not converge in ",
                                     maxit, " iterations.\nYou should increase parameter 'maxit'.\n", sep = "")
 
@@ -330,17 +338,15 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
       timeU <- list()
       timeU <- c(timeU,list(Sys.time()))
       res.ind <- propcalcs(object$syn[[j]], data)
+      timeU <- c(timeU,list(Sys.time()))
+      time <- c(time,list(timeU))
+      assign("debugTime", time, envir = .GlobalEnv)
       if (method == "logit" & is.null(resamp.method)) {
         if (j == 1) cat("Fitting syntheses: ")
         cat(j, " ", sep = "")
       }
-      timeU <- c(timeU,list(Sys.time()))
-      utilVal[j] <- res.ind$utilVal
-      timeU <- c(timeU,list(Sys.time()))
-      fit[[j]] <- res.ind$fit
-      timeU <- c(timeU,list(Sys.time()))
-      nnosplits[[j]] <- res.ind$nnosplits
-      timeU <- c(timeU,list(Sys.time()))
+      
+      utilVal[j] <- res.ind$utilVal; fit[[j]] <- res.ind$fit; nnosplits[[j]] <- res.ind$nnosplits
       if (!is.null(resamp.method) && resamp.method == "pairs") {
         if (j == 1) {
           if (print.every == 0) cat("Simulating NULL pMSE from ", m*(m - 1)/2, " pairs.", sep = "")
@@ -355,16 +361,10 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
           }
         }
       } else {
-        timeU <- c(timeU,list(Sys.time()))
         utilExp[j] <- res.ind$utilExp 
-        timeU <- c(timeU,list(Sys.time()))
         utilR[j]   <- res.ind$utilR 
-        timeU <- c(timeU,list(Sys.time()))
         utilStd[j] <- res.ind$utilStd
-        timeU <- c(timeU,list(Sys.time()))
       }
-      time <- c(time,list(timeU))
-      assign("debugTime", time, envir = .GlobalEnv)
     }
     
     if (!is.null(resamp.method) && resamp.method == "pairs") {
