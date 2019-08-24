@@ -345,7 +345,11 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
       }
       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       
-      utilVal[j] <- res.ind$utilVal; fit[[j]] <- res.ind$fit; nnosplits[[j]] <- res.ind$nnosplits
+      utilVal[j] <- res.ind$utilVal
+      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
+      fit[[j]] <- res.ind$fit
+      assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
+      nnosplits[[j]] <- res.ind$nnosplits
       assign("timeU", c(timeU,list(Sys.time())), envir = .GlobalEnv)
       if (!is.null(resamp.method) && resamp.method == "pairs") {
         if (j == 1) {
