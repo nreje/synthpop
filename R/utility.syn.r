@@ -171,6 +171,8 @@ utility.gen <- function(object, data, method = "logit", maxorder = 1,
  # Function for getting propensity scores 
  # --------------------------------------
  propcalcs <- function(syndata, data) {
+   
+   nnosplits <- NA # for 'logit' fix
     
    df.prop <- rbind(syndata, data)  # make data frame for calculating propensity score
    n1 <- dim(data)[1]
