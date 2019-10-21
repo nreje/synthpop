@@ -281,7 +281,7 @@ check.predictor.matrix.syn <- function(setup){
  if (length(vis) > 1) {
  	 pred[,vis.syn] <- ifelse((pred[,vis.syn] == 1 & pred.dt[, vis.syn] == 0),
                              0, pred[, vis.syn])
- 	 if (nrow(preddel) > 0) cat(paste("Not synthesised predictor ",
+ 	 if (nrow(preddel) > 0 & print.flag == TRUE) cat(paste("Not synthesised predictor ",
                          varnames[vis.syn][preddel[, 2]],
                          " removed from predictor.matrix for variable ",
                          varnames[preddel[, 1]], ".\n", sep = ""))
