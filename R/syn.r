@@ -311,7 +311,7 @@ check.method.syn <- function(setup, data, proper) {
  mcatall <- (method %in% "catall")[vis]
  mipf    <- (method %in% "ipf")[vis]
  if (any(mipf) & any(mcatall)) stop("Methods 'ipf' and 'catall' cannot both be used.\nIf you want all margins fitted for a set of variables,\nthen you could use 'ipf' and specify othmargins appropriately.\n", call. = FALSE)
- 
+ assign("debugMethod", method, envir = .GlobalEnv)
  if (any(mcatall)) {
    if (any(mcatall != mcatall[order(!mcatall)])) stop("All variables with method 'catall' must be together at start of visit sequence.\n", call. = FALSE)
    if (sum(mcatall) == 1) {
@@ -326,7 +326,7 @@ check.method.syn <- function(setup, data, proper) {
      cat("First method changed to 'sample' from 'ipf' as set for a single variable only.\n", call. = FALSE)
    }
  }
- 
+ assign("debugMethod2", method, envir = .GlobalEnv)
  # change method for constant variables but leave passive variables untouched
  # factors and character variables with missing data won't count,
  # as NA is made into an additional level
